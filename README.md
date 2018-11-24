@@ -3,7 +3,7 @@ The bot randomly assigns members of a channel to each other and sends the name o
 
 ## Requirements - Install
 - Python
-- slackclient: `pip install slackclient`
+- slackclient: ```pip install slackclient```
 
 ## Setup
 1. Create a new App within your Slack workspace: https://api.slack.com/apps
@@ -19,7 +19,9 @@ SLACK_API_TOKEN={your-slack-bot-access-token} python ./secret_santa.py
 
 ## Environment variables
 `SLACK_API_TOKEN`: your slack bot access token - Required.
+
 `CHANNEL_NAME`: the name of your secret santa channel - Optional. Default: secret-santa
+
 `DRY_RUN`: only printing out the `user_id` pairs but not actually sending the messages
 
-![](https://gph.is/1UTyrBr)
+![](https://media.giphy.com/media/dSbiCM0hplxQs/giphy.gif)
