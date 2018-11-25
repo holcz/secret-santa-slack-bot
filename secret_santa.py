@@ -9,26 +9,11 @@ class Member(object):
         self.name = name
 
 def pairing(members_list):
-    shuffled_list = list(members_list)
-    shuffled_list = every_day_im_shuffling(members_list, shuffled_list)
-    pair_map = {}
-    
-    for i in xrange(0, len(members_list)):
-        pair_map[members_list[i].id] = shuffled_list[i]
-    
+    # Optimize out shuffling:
+    # the members list contains user ids, we can assume that its order is random enough
+    pair_map = {members_list[i-1].id: members_list[i] for i in xrange(1, len(members_list))}
+    pair_map[members_list[len(members_list)-1].id] = members_list[0]
     return pair_map
-
-def every_day_im_shuffling(members_list, shuffled_list):
-    print "Shuffling"
-    shuffle(shuffled_list)
-    paring_good = True
-    for i in xrange(0, len(members_list)):
-        if members_list[i].id == shuffled_list[i].id:
-            paring_good = False
-            break
-    if paring_good:
-        return shuffled_list
-    return every_day_im_shuffling(members_list, shuffled_list)
 
 slack_token = os.environ["SLACK_API_TOKEN"]
 is_dry_run = os.environ.get("DRY_RUN", False)
