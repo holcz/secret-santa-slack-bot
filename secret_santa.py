@@ -4,9 +4,10 @@ from random import shuffle
 from slackclient import SlackClient
 
 class Member(object):
-    def __init__(self, id, name):
+    def __init__(self, id, name, real_name):
         self.id = id
         self.name = name
+        self.real_name = real_name
 
 def pairing(members_list):
     shuffled_list = list(members_list)
@@ -29,7 +30,7 @@ secret_santa_channel_info = sc.api_call("channels.info", channel=secret_santa_ch
 
 secret_santa_member_ids = set(secret_santa_channel_info['members'])
 
-secret_santa_members = [Member(member['id'], member['real_name']) for member in all_members if member['id'] in secret_santa_member_ids]
+secret_santa_members = [Member(member['id'], member['name'], member['real_name']) for member in all_members if member['id'] in secret_santa_member_ids]
 
 pairing_map = pairing(secret_santa_members)
 
@@ -49,14 +50,16 @@ for user_id in pairing_map:
     if (is_dry_run):
         print "{} : {}".format(user_id, pairing_map[user_id].id)
     else:
-        message = "Ho Ho Ho. You were assigned to: {}\nBe sure you make her/him Happy!\nMerry Christmas! :santa:".format(
-            pairing_map[user_id].name
+        message = "Ho Ho Ho. You were assigned to: <@{username}>!\nHoliday cheer is in the air, and {real_name}'s happyness is in your hands!\nMerry Christmas! :christmas_tree:".format(
+            real_name=pairing_map[user_id].real_name,
+            username=pairing_map[user_id].name,
         )
         sc.api_call("chat.postMessage",
             channel=direct_message_channels[user_id],
             text=message,
             as_user=False,
-            icon_emoji=":santa:"
+            icon_url="https://avatars.slack-edge.com/2018-12-05/495885983556_b649926cc18291205483_48.png",
+            username="Secret Santa"
         )
 
 print "Ho ho ho, everyone will be Happy!"
