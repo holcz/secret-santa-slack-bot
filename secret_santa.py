@@ -9,10 +9,10 @@ class Member(object):
         self.name = name
 
 def pairing(members_list):
-    # Optimize out shuffling:
-    # the members list contains user ids, we can assume that its order is random enough
-    pair_map = {members_list[i-1].id: members_list[i] for i in xrange(1, len(members_list))}
-    pair_map[members_list[len(members_list)-1].id] = members_list[0]
+    shuffled_list = list(members_list)
+    shuffle(shuffled_list)
+    pair_map = {shuffled_list[i-1].id: shuffled_list[i] for i in xrange(1, len(shuffled_list))}
+    pair_map[shuffled_list[len(shuffled_list)-1].id] = shuffled_list[0]
     return pair_map
 
 slack_token = os.environ["SLACK_API_TOKEN"]
