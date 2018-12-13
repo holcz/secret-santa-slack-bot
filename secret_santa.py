@@ -47,19 +47,21 @@ if len(direct_message_channels) != len(pairing_map):
     exit
 
 for user_id in pairing_map:
-    if (is_dry_run):
-        print "{} : {}".format(user_id, pairing_map[user_id].id)
-    else:
-        message = "Ho Ho Ho. You were assigned to: <@{username}>!\nHoliday cheer is in the air, and {real_name}'s happyness is in your hands!\nMerry Christmas! :christmas_tree:".format(
-            real_name=pairing_map[user_id].real_name,
-            username=pairing_map[user_id].name,
-        )
-        sc.api_call("chat.postMessage",
-            channel=direct_message_channels[user_id],
-            text=message,
-            as_user=False,
-            icon_url="https://avatars.slack-edge.com/2018-12-05/495885983556_b649926cc18291205483_48.png",
-            username="Secret Santa"
-        )
-
+    try:
+        message = u"Ho Ho Ho. You were assigned to: <@{username}>!\nHoliday cheer is in the air, and {real_name}'s happyness is in your hands!\nMerry Christmas! :christmas_tree:".format(
+                real_name=pairing_map[user_id].real_name,
+                username=pairing_map[user_id].name,
+            )
+        if (is_dry_run):
+            print message
+        else:
+            sc.api_call("chat.postMessage",
+                channel=direct_message_channels[user_id],
+                text=message,
+                as_user=False,
+                icon_url="https://avatars.slack-edge.com/2018-12-05/495885983556_b649926cc18291205483_48.png",
+                username="Secret Santa"
+            )
+    except Exception as e:
+        print e.message
 print "Ho ho ho, everyone will be Happy!"
