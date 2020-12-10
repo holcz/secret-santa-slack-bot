@@ -48,7 +48,7 @@ if len(direct_message_channels) != len(pairing_map):
 
 for user_id in pairing_map:
     try:
-        message = u"Ho Ho Ho. You were assigned to: <@{username}>!\nHoliday cheer is in the air, and {real_name}'s happyness is in your hands!\nMerry Christmas! :christmas_tree:".format(
+        message = u"Ho Ho Ho. You were assigned to: <@{username}>!\nHoliday cheer is in the air, and {real_name}'s happiness is in your hands!\nMerry Christmas! :christmas_tree:".format(
                 real_name=pairing_map[user_id].real_name,
                 username=pairing_map[user_id].name,
             )
